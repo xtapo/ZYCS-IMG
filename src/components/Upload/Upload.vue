@@ -10,56 +10,63 @@
         <path d="M612.218435 364.766609l1.335652 2.003478L389.698783 590.58087l55.229217 55.362782 181.938087-181.938087V1018.88h78.558609v-78.58087h156.471652-156.471652V458.039652l183.808 183.919305 55.340521-55.340522-277.147826-277.058783-55.229217 55.229218z m-141.913044 575.666087h156.471652-156.716521 0.222608z" fill="#909399"></path>
       </svg>
       <p>
-        <span>点击上传 / 拖拽上传</span>
-        <span>上传违反中国大陆、香港及美国法律的图片将会直接删除，并封禁设备IP</span>
+        <span>Click to upload / Drag and drop to upload</span>
+        <span>Uploading images that violate the laws of Mainland China, Hong Kong, or the United States will result in direct deletion and device IP banning.</span>
       </p>
     </div>
   </section>
 </template>
+
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useToast } from '@/components/ui/toast/use-toast';
 const { toast } = useToast();
-// 参数
+
+// Props
 const props = defineProps(['modelValue', 'UploadConfig', 'uploadAPI']);
 const emits = defineEmits(['update:modelValue']);
 const UploadConfig = ref<any>(props.UploadConfig);
-// 文件上传列表变化事件
+
+// Handle file selection change
 const fileListChange = (v: Event) => {
   if (!v.target) return;
   const FileTarget: HTMLInputElement = v.target as HTMLInputElement;
   const FileListArr: Array<any> = [...props.modelValue, ...Array.from(FileTarget.files || [])];
-  // 过滤不符合Size的文件
+
+  // Filter out files exceeding the size limit
   let fileListFilter = FileListArr.filter((i: any) => UploadConfig.value.MaxSize && i.size <= UploadConfig.value.MaxSize * 1024 * 1024);
-  if (fileListFilter.length != FileListArr.length) toast({ title: 'Tips', description: `已过滤Size超过 ${UploadConfig.value.MaxSize}MB 的文件` });
-  // 过滤超过数量的文件
+  if (fileListFilter.length != FileListArr.length) toast({ title: 'Tips', description: `Filtered out files exceeding ${UploadConfig.value.MaxSize}MB` });
+
+  // Filter out files exceeding the upload limit
   if (UploadConfig.value.Max && fileListFilter.length > UploadConfig.value.Max) {
-    toast({ title: 'Tips', description: `已过滤超过最大上传 ${UploadConfig.value.Max}个 的文件` });
+    toast({ title: 'Tips', description: `Filtered out files exceeding the maximum upload limit of ${UploadConfig.value.Max}` });
     fileListFilter = Array.from(FileTarget.files || []).slice(0, UploadConfig.value.Max);
   }
+  
   emits('update:modelValue', fileListFilter);
   fileUpload(fileListFilter);
 };
 
-// 上传
+// File upload function
 const fileUpload = async (FileListArr: Array<any>) => {
   FileListArr.forEach(async (i: any) => {
     if (i.upload_status) return;
     const formData = new FormData();
     formData.append('file', i);
-    // 做图片预览blob======
+
+    // Create image preview blob
     if (i.type.startsWith('image/')) {
       const blob = URL.createObjectURL(i);
       i.upload_blob = blob;
     }
-    // 做图片预览blob======
-    // 同步上传状态======
+
+    // Sync upload status
     i.upload_status = 'uploading';
     i.upload_progress = 96;
     emits('update:modelValue', [...FileListArr]);
-    // 同步上传状态======
+
     try {
-      // 发送请求
+      // Send upload request
       const res = await fetch(props.uploadAPI, {
         method: 'POST',
         body: formData,
@@ -72,10 +79,9 @@ const fileUpload = async (FileListArr: Array<any>) => {
       i.upload_status = 'error';
       i.upload_result = error;
     } finally {
-      // 同步上传状态======
+      // Sync final upload status
       i.upload_progress = 100;
       emits('update:modelValue', [...FileListArr]);
-      // 同步上传状态======
     }
   });
 };
