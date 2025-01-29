@@ -7,13 +7,13 @@
       <AlertDescription class="p-0 text-xs sm:text-sm">
         <p class="pt-2">Unlimited image storage! You can upload as many images as you want.</p>
         <p>Images are cached after the first access and remain "permanently" available, distributed globally via CDN to ensure the fastest possible delivery.</p>
-        <p>ZYCS Image Hosting is a file upload project supported and maintained by  
-          <a class="text-slate-400" href="https://www.vvhan.com" target="_blank" title="Han Xiaohan's Blog">Han Xiaohan's Blog</a>,  
+        <p>Xtapo Image Hosting is a file upload project supported and maintained by  
+          <a class="text-slate-400" href="https://photos.xtapo.org/" target="_blank" title="Han Xiaohan's Blog">Photos Xtapo</a>,  
           dedicated to providing users with a stable and permanent storage service.
         </p>
         <p style="font-weight: bold">
           Open-source repository: 
-          <a class="text-[#0969da]" href="https://github.com/uxiaohan/ZYCS-IMG" target="_blank">ZYCS-IMG</a>
+          <a class="text-[#0969da]" href="https://github.com/uxiaohan/ZYCS-IMG" target="_blank">XTAPO-IMG</a>
         </p>
       </AlertDescription>
     </Alert>
