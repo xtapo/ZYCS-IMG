@@ -13,7 +13,7 @@
         </p>
         <p style="font-weight: bold">
           Open-source repository: 
-          <a class="text-[#0969da]" href="https://github.com/uxiaohan/ZYCS-IMG" target="_blank">XTAPO-IMG</a>
+          <a class="text-[#0969da]" href="https://github.com/xtapo/ZYCS-IMG" target="_blank">XTAPO-IMG</a>
         </p>
       </AlertDescription>
     </Alert>
