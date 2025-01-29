@@ -11,7 +11,7 @@
       </svg>
       <p>
         <span>Click to upload / Drag and drop to upload</span>
-        <span>Uploading images that violate the laws of Mainland China, Hong Kong, or the United States will result in direct deletion and device IP banning.</span>
+        <span>Uploading images that violate the law will be directly deleted and the device IP banned.</span>
       </p>
     </div>
   </section>
